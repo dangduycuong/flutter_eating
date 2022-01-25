@@ -18,3 +18,12 @@ class MealLoadDataSuccess extends MealState {
   @override
   List<Object> get props => [];
 }
+
+class SearchMealErrorState extends MealState {
+  final String error;
+
+  const SearchMealErrorState(this.error);
+
+  @override
+  List<Object> get props => [error];
+}

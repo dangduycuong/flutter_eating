@@ -30,9 +30,8 @@ class MealBloc extends Bloc<MealEvent, MealState> {
 
   void _searchMealsByName(
       SearchMealsByName event, Emitter<MealState> emit) async {
-    if (event.text == '') {
-      return;
-    }
+
+    meals = [];
     emit(MealLoadingData());
 
     final client =
@@ -42,11 +41,14 @@ class MealBloc extends Bloc<MealEvent, MealState> {
       MealsModel result = await client.searchMealsByName(event.text);
 
       if (result.meals!.isEmpty) {
+        emit(SearchMealErrorState('${event.text} not found'));
       } else {
         meals = result.meals!;
         emit(MealLoadDataSuccess());
       }
-    } catch (exception) {}
+    } catch (exception) {
+      emit(SearchMealErrorState(exception.toString()));
+    }
   }
 
   void _fetchMealCategoriesData(
