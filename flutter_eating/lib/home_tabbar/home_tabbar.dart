@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_eating/cocktail/view/home_cocktail_page.dart';
 import 'package:flutter_eating/meals/home_meal_page.dart';
 import 'package:flutter_eating/meals/views/search_meals_name.dart';
+import 'package:flutter_eating/posts/views/post_page.dart';
 
 class HomeBottomBar extends StatefulWidget {
   const HomeBottomBar({Key? key}) : super(key: key);
@@ -11,19 +13,33 @@ class HomeBottomBar extends StatefulWidget {
 
 class _HomeBottomBarState extends State<HomeBottomBar> {
   int _selectedIndex = 0;
+
+  String get titleAppBar {
+    String result = '';
+    switch (_selectedIndex) {
+      case 0:
+        result = 'Category Meals';
+        break;
+      case 1:
+        result = 'Search Meals';
+        break;
+      case 2:
+        result = 'Posts';
+        break;
+      default:
+        result = 'Cocktails';
+        break;
+    }
+    return result;
+  }
+
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     HomeMealPage(),
     SearchMealsNamePage(),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Settings',
-      style: optionStyle,
-    ),
+    PostsListPage(),
+    HomeCocktailPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -36,7 +52,9 @@ class _HomeBottomBarState extends State<HomeBottomBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Meals'),
+        title: Text(
+          titleAppBar,
+        ),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -54,13 +72,13 @@ class _HomeBottomBarState extends State<HomeBottomBar> {
             backgroundColor: Colors.green,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
+            icon: Icon(Icons.comment),
+            label: 'Posts',
             backgroundColor: Colors.purple,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(Icons.hourglass_full_rounded),
+            label: 'Cocktail',
             backgroundColor: Colors.pink,
           ),
         ],

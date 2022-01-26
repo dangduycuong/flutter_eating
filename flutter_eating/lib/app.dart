@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_eating/home_tabbar/home_tabbar.dart';
+import 'package:flutter_eating/posts/views/post_detail_page.dart';
 import 'package:flutter_eating/widgets/youtube_player_demo_page.dart';
 
 import 'meals/views/meal_category_detail.dart';
@@ -17,6 +18,7 @@ class App extends StatelessWidget {
         MealCategoryPage.routeName: (context) => const MealCategoryPage(),
         MealDetailPage.routeName: (context) => const MealDetailPage(),
         YoutubePlayerDemoPage.routeName: (context) => const YoutubePlayerDemoPage(),
+        PostDetailPage.routeName: (context) => const PostDetailPage(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,

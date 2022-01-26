@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_eating/meals/bloc/meal_bloc.dart';
 import 'package:flutter_eating/meals/models/search_meals_result_model.dart';
 import 'package:flutter_eating/widgets/youtube_player_demo_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MealDetailPage extends StatefulWidget {
   const MealDetailPage({Key? key}) : super(key: key);
@@ -38,24 +39,31 @@ class _MealDetailPageState extends State<MealDetailPage> {
             appBar: AppBar(
               title: Text('${meal.strMeal}'),
             ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Column(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, YoutubePlayerDemoPage.routeName);
-                      },
-                      child: _mealImage(meal.strMealThumb),
-                    ),
-                    Text('${meal.strInstructions}'),
-                    Text('${meal.strInstructions}'),
-                    Text('${meal.strInstructions}'),
-                    Text('${meal.strInstructions}'),
-                    Text('${meal.strInstructions}'),
-                  ],
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  child: Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, YoutubePlayerDemoPage.routeName);
+                        },
+                        child: _mealImage(meal.strMealThumb),
+                      ),
+                      Text(
+                        '${meal.strInstructions}',
+                        style: GoogleFonts.lato(
+                          textStyle: Theme.of(context).textTheme.bodyText1,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

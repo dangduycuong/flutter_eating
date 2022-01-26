@@ -27,9 +27,9 @@ class _YoutubePlayerDemoPageState extends State<YoutubePlayerDemoPage> {
 
   final List<String> _ids = [
     'YsEfb3jHvww',
-    'gQDByCdjUXw',
-    'iLnmTe5Q2Qw',
-    '_WoCV4c6XOE',
+    'F3ytBDcoYm0',
+    'W98GKy6DqX0',
+    'kzkziUE2DFI',
     'KmzdUe0RSJo',
     '6jZDSSZZxjQ',
     'p2lYr3vM_1w',
