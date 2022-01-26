@@ -5,6 +5,8 @@ import 'package:flutter_eating/meals/bloc/meal_bloc.dart';
 import 'package:flutter_eating/meals/views/meal_category_detail.dart';
 import 'package:flutter_eating/widgets/loading_list_page.dart';
 
+import 'models/meal_categories_model.dart';
+
 class HomeMealPage extends StatelessWidget {
   const HomeMealPage({Key? key}) : super(key: key);
 
@@ -32,6 +34,68 @@ class _HomeMealViewState extends State<HomeMealView> {
     super.initState();
   }
 
+  Widget _categoryItemImage(String? url) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: CachedNetworkImage(
+        width: 48,
+        height: 48,
+        placeholder: (context, url) => const CircularProgressIndicator(),
+        imageUrl: url ?? '',
+      ),
+    );
+  }
+
+  Widget _buildCellForRowAt(CategoriesItemModel item) {
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, MealCategoryPage.routeName,
+            arguments: item);
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        decoration: BoxDecoration(
+            color: Colors.blue.withOpacity(0.3),
+            borderRadius: BorderRadius.circular(8)),
+        child: Row(
+          children: [
+            const SizedBox(width: 8),
+            _categoryItemImage(item.strCategoryThumb),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${item.strCategory}',
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${item.strCategoryDescription}',
+                      maxLines: 1,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Colors.grey,
+                size: 16,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MealBloc, MealState>(
@@ -39,60 +103,11 @@ class _HomeMealViewState extends State<HomeMealView> {
         if (state is MealLoadingData) {
           return const LoadingListPage();
         }
-        return Container(
-          padding: const EdgeInsets.all(16),
-          child: ListView.builder(
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {Navigator.pushNamed(context, MealCategoryPage.routeName, arguments: bloc.categories[index]);},
-                child: Card(
-                  color: Colors.white,
-                  elevation: 4,
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
-                    children: [
-                      CachedNetworkImage(
-                        width: 24,
-                        height: 24,
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        imageUrl: '${bloc.categories[index].strCategoryThumb}',
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${bloc.categories[index].strCategory}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue,
-                              ),
-                            ),
-                            Text(
-                              '${bloc.categories[index].strCategoryDescription}',
-                              maxLines: 1,
-                            ),
-                          ],
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-            itemCount: bloc.categories.length,
-          ),
+        return ListView.builder(
+          itemBuilder: (context, index) {
+            return _buildCellForRowAt(bloc.categories[index]);
+          },
+          itemCount: bloc.categories.length,
         );
       },
       listener: (context, state) {},

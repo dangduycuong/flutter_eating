@@ -30,7 +30,6 @@ class MealBloc extends Bloc<MealEvent, MealState> {
 
   void _searchMealsByName(
       SearchMealsByName event, Emitter<MealState> emit) async {
-
     meals = [];
     emit(MealLoadingData());
 

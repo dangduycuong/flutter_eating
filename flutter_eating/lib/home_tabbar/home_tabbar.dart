@@ -15,10 +15,6 @@ class _HomeBottomBarState extends State<HomeBottomBar> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     HomeMealPage(),
-    // Text(
-    //   'Index 0: Home',
-    //   style: optionStyle,
-    // ),
     SearchMealsNamePage(),
     Text(
       'Index 2: School',
@@ -54,7 +50,7 @@ class _HomeBottomBarState extends State<HomeBottomBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
-            label: 'Business',
+            label: 'Meals',
             backgroundColor: Colors.green,
           ),
           BottomNavigationBarItem(

@@ -6,6 +6,8 @@ import 'package:flutter_eating/widgets/loading_list_page.dart';
 import 'package:flutter_eating/widgets/search_bar_item.dart';
 import 'package:flutter_eating/meals/models/search_meals_result_model.dart';
 
+import 'meal_detail_page.dart';
+
 class SearchMealsNamePage extends StatelessWidget {
   const SearchMealsNamePage({Key? key}) : super(key: key);
 
@@ -31,7 +33,7 @@ class _SearchMealsNameViewState extends State<SearchMealsNameView> {
   @override
   void initState() {
     _bloc = context.read();
-
+    _bloc.add(const SearchMealsByName(''));
     super.initState();
   }
 
@@ -60,7 +62,9 @@ class _SearchMealsNameViewState extends State<SearchMealsNameView> {
 
   Widget _buildMealItem(MealResultItem meal) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, MealDetailPage.routeName, arguments: meal);
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8),
         margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
@@ -82,7 +86,7 @@ class _SearchMealsNameViewState extends State<SearchMealsNameView> {
                       '${meal.strMeal}',
                       style: const TextStyle(fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text(
                       '${meal.strInstructions}',
                       maxLines: 1,

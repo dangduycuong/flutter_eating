@@ -12,6 +12,16 @@ class MealCategoryPage extends StatefulWidget {
 }
 
 class _MealCategoryPageState extends State<MealCategoryPage> {
+  Widget _categoryImage(String? imageUrl) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: CachedNetworkImage(
+        placeholder: (context, url) => const CircularProgressIndicator(),
+        imageUrl: imageUrl ?? '',
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final CategoriesItemModel item =
@@ -24,10 +34,7 @@ class _MealCategoryPageState extends State<MealCategoryPage> {
       ),
       body: Column(
         children: [
-          CachedNetworkImage(
-            placeholder: (context, url) => const CircularProgressIndicator(),
-            imageUrl: '${item.strCategoryThumb}',
-          ),
+          _categoryImage(item.strCategoryThumb),
           Expanded(
             child: Container(
               padding: const EdgeInsets.all(16),
