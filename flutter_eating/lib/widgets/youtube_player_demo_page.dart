@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -30,11 +29,6 @@ class _YoutubePlayerDemoPageState extends State<YoutubePlayerDemoPage> {
     'F3ytBDcoYm0',
     'W98GKy6DqX0',
     'kzkziUE2DFI',
-    'KmzdUe0RSJo',
-    '6jZDSSZZxjQ',
-    'p2lYr3vM_1w',
-    '7QUtEmBT_-w',
-    '34_PXCzGw1M',
   ];
 
   @override
@@ -145,7 +139,7 @@ class _YoutubePlayerDemoPageState extends State<YoutubePlayerDemoPage> {
               onPressed: () => Navigator.push(
                 context,
                 CupertinoPageRoute(
-                  builder: (context) => VideoList(),
+                  builder: (context) => const VideoList(),
                 ),
               ),
             ),
@@ -185,7 +179,7 @@ class _YoutubePlayerDemoPageState extends State<YoutubePlayerDemoPage> {
                     controller: _idController,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Enter youtube \<video id\> or \<link\>',
+                      hintText: 'Enter youtube <video id> or <link>',
                       fillColor: Colors.blueAccent.withAlpha(20),
                       filled: true,
                       hintStyle: const TextStyle(

@@ -2,11 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_eating/meals/bloc/meal_bloc.dart';
+import 'package:flutter_eating/widgets/cell_item_view.dart';
+import 'package:flutter_eating/widgets/detail_data_page.dart';
 import 'package:flutter_eating/widgets/loading_list_page.dart';
 import 'package:flutter_eating/widgets/search_bar_item.dart';
-import 'package:flutter_eating/meals/models/search_meals_result_model.dart';
-
-import 'meal_detail_page.dart';
 
 class SearchMealsNamePage extends StatelessWidget {
   const SearchMealsNamePage({Key? key}) : super(key: key);
@@ -42,70 +41,24 @@ class _SearchMealsNameViewState extends State<SearchMealsNameView> {
   Widget _buildListMeal() {
     return ListView.builder(
       itemBuilder: (context, index) {
-        return _buildMealItem(_bloc.meals[index]);
+        final item = _bloc.meals[index];
+        return CellItemView(
+          leadingText: null,
+          url: item.strMealThumb,
+          title: item.strMeal,
+          subtitle: item.strInstructions,
+          tapToItem: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return DetailDataPage(
+                url: item.strMealThumb,
+                title: item.strMeal,
+                subtitle: item.strInstructions,
+              );
+            }));
+          },
+        );
       },
       itemCount: _bloc.meals.length,
-    );
-  }
-
-  Widget _mealImage(String? url) {
-    return ClipOval(
-      child: CachedNetworkImage(
-        placeholder: (context, url) => const CircularProgressIndicator(),
-        imageUrl: url ?? '',
-        width: 48,
-        height: 48,
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-
-  Widget _buildMealItem(MealResultItem meal) {
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, MealDetailPage.routeName, arguments: meal);
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-        decoration: BoxDecoration(
-            color: Colors.blue.withOpacity(0.3),
-            borderRadius: BorderRadius.circular(8)),
-        child: Row(
-          children: [
-            const SizedBox(width: 8),
-            _mealImage(meal.strMealThumb),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '${meal.strMeal}',
-                      style: const TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${meal.strInstructions}',
-                      maxLines: 1,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: Colors.grey,
-                size: 16,
-              ),
-            )
-          ],
-        ),
-      ),
     );
   }
 

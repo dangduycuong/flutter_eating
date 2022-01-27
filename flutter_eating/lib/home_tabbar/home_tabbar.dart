@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_eating/cocktail/view/home_cocktail_page.dart';
-import 'package:flutter_eating/meals/home_meal_page.dart';
+import 'package:flutter_eating/meals/views/category_meal_page.dart';
 import 'package:flutter_eating/meals/views/search_meals_name.dart';
 import 'package:flutter_eating/posts/views/post_page.dart';
 
@@ -33,10 +33,8 @@ class _HomeBottomBarState extends State<HomeBottomBar> {
     return result;
   }
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    HomeMealPage(),
+    CategoryMealPage(),
     SearchMealsNamePage(),
     PostsListPage(),
     HomeCocktailPage(),
@@ -64,26 +62,27 @@ class _HomeBottomBarState extends State<HomeBottomBar> {
           BottomNavigationBarItem(
             icon: Icon(Icons.category),
             label: 'Meal Categories',
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.deepOrange,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
             label: 'Meals',
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.deepOrange,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.comment),
             label: 'Posts',
-            backgroundColor: Colors.purple,
+            backgroundColor: Colors.deepOrange,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.hourglass_full_rounded),
             label: 'Cocktail',
-            backgroundColor: Colors.pink,
+            backgroundColor: Colors.deepOrange,
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        // selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.yellowAccent.withOpacity(1),
         onTap: _onItemTapped,
       ),
     );

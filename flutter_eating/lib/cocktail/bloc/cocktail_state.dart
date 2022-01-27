@@ -8,3 +8,13 @@ class CocktailInitial extends CocktailState {
   @override
   List<Object> get props => [];
 }
+
+class LoadingCocktailState extends CocktailState {
+  @override
+  List<Object?> get props => [];
+}
+
+class SearchCocktailSuccessState extends CocktailState {
+  @override
+  List<Object?> get props => [];
+}
