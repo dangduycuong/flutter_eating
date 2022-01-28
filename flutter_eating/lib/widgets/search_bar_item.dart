@@ -17,6 +17,7 @@ class _SearchBarItemState extends State<SearchBarItem> {
 
   void _onClearTapped() {
     _textController.text = '';
+    widget.textChangValue('');
   }
 
   @override
