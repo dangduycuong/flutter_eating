@@ -6,6 +6,7 @@ import 'package:flutter_eating/meals/bloc/meal_bloc.dart';
 import 'package:flutter_eating/posts/model/post_load_data_state_model.dart';
 import 'package:flutter_eating/posts/model/post_model.dart';
 import 'package:flutter_eating/posts/service/post_api_service.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 part 'post_event.dart';
 
@@ -49,8 +50,22 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     posts = [];
     stopLoadPost = false;
     emit(const PostFetchDataState(PostLoadDataStateModel.loading));
-    final client =
-        PostClient(Dio(BaseOptions(contentType: "application/json")));
+
+    Dio dio = Dio(
+      BaseOptions(
+          baseUrl: "https://jsonplaceholder.typicode.com",
+          connectTimeout: 10000,
+          contentType: "application/json"),
+    );
+    dio.interceptors.add(PrettyDioLogger(
+      requestHeader: true,
+      requestBody: true,
+      responseBody: true,
+      responseHeader: false,
+      compact: false,
+    ));
+
+    final client = PostClient(dio);
     try {
       List<PostModel> result = await client.getPosts(_start, _limit);
       if (result.isEmpty) {
