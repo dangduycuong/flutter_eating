@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_eating/meals/models/meal_categories_model.dart';
 import 'package:flutter_eating/meals/services/meals_api_services.dart';
 import 'package:flutter_eating/meals/models/search_meals_result_model.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import 'package:stream_transform/src/rate_limit.dart';
 import 'package:stream_transform/src/switch.dart';
@@ -33,8 +34,21 @@ class MealBloc extends Bloc<MealEvent, MealState> {
     meals = [];
     emit(MealLoadingData());
 
-    final client =
-        RestMealsClient(Dio(BaseOptions(contentType: "application/json")));
+    Dio dio = Dio(
+      BaseOptions(
+          baseUrl: "https://www.themealdb.com/api/json/v1/1/",
+          connectTimeout: 10000,
+          contentType: "application/json"),
+    );
+    dio.interceptors.add(PrettyDioLogger(
+      requestHeader: true,
+      requestBody: true,
+      responseBody: true,
+      responseHeader: false,
+      compact: false,
+    ));
+
+    final client = RestMealsClient(dio);
 
     try {
       MealsModel result = await client.searchMealsByName(event.text);
@@ -53,9 +67,21 @@ class MealBloc extends Bloc<MealEvent, MealState> {
   void _fetchMealCategoriesData(
       LoadMealCategories event, Emitter<MealState> emit) async {
     emit(MealLoadingData());
+    Dio dio = Dio(
+      BaseOptions(
+          baseUrl: "https://www.themealdb.com/api/json/v1/1/",
+          connectTimeout: 10000,
+          contentType: "application/json"),
+    );
+    dio.interceptors.add(PrettyDioLogger(
+      requestHeader: true,
+      requestBody: true,
+      responseBody: true,
+      responseHeader: false,
+      compact: false,
+    ));
 
-    final client =
-        RestMealsClient(Dio(BaseOptions(contentType: "application/json")));
+    final client = RestMealsClient(dio);
 
     try {
       MealCategoriesModel result = await client.getAllMealCategories();

@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_eating/cocktail/model/cocktail_model.dart';
 import 'package:flutter_eating/cocktail/service/cocktail_client.dart';
 import 'package:flutter_eating/meals/bloc/meal_bloc.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 part 'cocktail_event.dart';
 
@@ -30,8 +31,28 @@ class CocktailBloc extends Bloc<CocktailEvent, CocktailState> {
     emit(LoadingCocktailState());
     cocktails = [];
 
+    Dio dio = Dio(
+      BaseOptions(
+          baseUrl: "https://www.thecocktaildb.com/api/json/v1/1/",
+          connectTimeout: 10000,
+          contentType: "application/json"),
+    );
+    dio.interceptors.add(PrettyDioLogger(
+      requestHeader: true,
+      requestBody: true,
+      responseBody: true,
+      responseHeader: false,
+      compact: false,
+    ));
+
+    // try {
+    //   await dio.get('http://www.mocky.io/v2/5d7fc75c3300000476f0b557');
+    // } catch (e) {
+    //   print(e);
+    // }
+
     final client =
-        CocktailClient(Dio(BaseOptions(contentType: "application/json")));
+        CocktailClient(dio);
 
     try {
       CocktailModel result = await client.getDrinks(event.text);

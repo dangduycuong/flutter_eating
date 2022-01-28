@@ -48,6 +48,7 @@ dependencies:
   youtube_player_flutter: ^8.0.0
   loadmore: ^2.0.1
   google_fonts: ^2.2.0
+  pretty_dio_logger: ^1.2.0-beta-1
 
 dev_dependencies:
   flutter_test:
